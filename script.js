@@ -16,7 +16,7 @@ function loadBooks() {
         // Image for the book (you can replace this with actual book image URLs)
         let bookImage = document.createElement("img");
         bookImage.classList.add("book-image");
-        bookImage.src = "https://raw.githubusercontent.com/saleemtoure/maktaba/blob/main/images/100.jpg";  // Placeholder image
+        bookImage.src = "https://raw.githubusercontent.com/saleemtoure/maktaba/main/images/100.jpg";  // Placeholder image
         bookImage.alt = books[i] + " cover";  // Alt text for the image
 
         // Log the image URL to ensure it's set correctly
