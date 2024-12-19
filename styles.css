@@ -94,16 +94,19 @@ button:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Image styling (1:1 aspect ratio) */
+/* Image styling */
 .book-image {
     width: 100%;
-    height: 0;
-    /* Set height to 0 */
-    padding-top: 100%;
-    /* This maintains a 1:1 aspect ratio (square) */
+    height: auto;
+    /* Ensure height adjusts to maintain the aspect ratio */
+    max-width: 100%;
+    /* Prevents overflow */
+    display: block;
+    /* Ensure the image is treated as a block element */
     object-fit: cover;
-    /* Ensures the image covers the area */
+    /* Makes sure the image covers the space without distortion */
 }
+
 
 /* Title styling (under the image) */
 .book-title {
