@@ -1,5 +1,3 @@
-/* styles.css */
-
 /* Body styling */
 body {
     font-family: Arial, sans-serif;
@@ -8,7 +6,6 @@ body {
     margin: 0;
     padding: 0;
     color: white;
-    /* White text color for contrast */
 }
 
 /* Navbar styling */
@@ -47,17 +44,12 @@ nav ul li a:hover {
     padding: 50px;
 }
 
-h1 {
-    color: #ECF0F1;
-    /* Light grey color for heading */
-}
-
+/* Button styling */
 button {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
     background-color: #1ABC9C;
-    /* Greenish button color */
     color: white;
     border: none;
     border-radius: 5px;
@@ -67,4 +59,59 @@ button {
 button:hover {
     background-color: #16A085;
     /* Darker greenish color on hover */
+}
+
+/* The book container itself */
+.book_container {
+    text-align: center;
+    padding: 20px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #34495E;
+    /* Optional border for the container */
+    border-radius: 10px;
+    /* Optional rounded corners */
+    background-color: transparent;
+    /* No background color for the container */
+    flex-wrap: wrap;
+    /* Allow books to wrap inside the container */
+}
+
+/* Individual books with white background */
+.book {
+    display: flex;
+    flex-direction: column;
+    /* Stack the content vertically */
+    position: relative;
+    width: 200px;
+    /* Fixed width for the books */
+    border: 2px solid #34495E;
+    border-radius: 10px;
+    overflow: hidden;
+    /* Ensures content doesn't overflow */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Image styling (1:1 aspect ratio) */
+.book-image {
+    width: 100%;
+    height: 0;
+    /* Set height to 0 */
+    padding-top: 100%;
+    /* This maintains a 1:1 aspect ratio (square) */
+    object-fit: cover;
+    /* Ensures the image covers the area */
+}
+
+/* Title styling (under the image) */
+.book-title {
+    background-color: white;
+    /* White background for the title */
+    color: #34495E;
+    /* Blueish text color */
+    padding: 10px;
+    text-align: center;
+    font-size: 16px;
 }
