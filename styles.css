@@ -15,7 +15,7 @@ body {
 }
 
 .bg {
-    background-image: url("/images/backdrop.png");
+    background-image: url("https://raw.githubusercontent.com/saleemtoure/maktaba/refs/heads/main/images/backdrop.png");
     height: 100%;
 
     background-position: center;
