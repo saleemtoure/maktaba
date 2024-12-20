@@ -2,7 +2,11 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     fetchSheetData();
+
+    setupSearchBar();
+
 });
+
 
 
 // Web scraping function to fetch the Google Sheet data
@@ -46,6 +50,9 @@ function fetchSheetData() {
 
             // After fetching all the books, display them
             displayBooks(books);
+
+            window.booksData = books;  // Store the books data globally for search
+
         })
         .catch(error => {
             console.error('Error fetching sheet data:', error);
@@ -138,5 +145,30 @@ function displayBooks(books) {
 
         // Append the bookDiv to the container
         bookContainer.appendChild(bookDiv);
+    });
+}
+
+
+
+function setupSearchBar() {
+    const searchBar = document.getElementById("searchBar");
+    const header = document.querySelector("h2"); // Assuming there's only one h2 on your page
+
+    searchBar.addEventListener("input", function () {
+        const query = searchBar.value.toLowerCase();
+        // If there's an active search, hide the h2
+        if (query) {
+            header.style.display = "none";  // Hide the <h2> when searching
+        } else {
+            header.style.display = "block"; // Show the <h2> again when the search is cleared
+        }
+        const filteredBooks = window.booksData.filter(book => {
+            return book.title.toLowerCase().includes(query) ||
+                book.author.toLowerCase().includes(query) ||
+                book.desc.toLowerCase().includes(query);
+        });
+
+        // Display only the four most similar books
+        displayBooks(filteredBooks.slice(0, 4));
     });
 }
