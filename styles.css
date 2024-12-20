@@ -3,7 +3,6 @@
 :root {
     --lightBlue: #063551;
     --darkBlue: #052842;
-    --white: #ffffff;
     --golden: #826810
 }
 
@@ -59,7 +58,8 @@ nav ul li {
     margin: 0 15px;
 }
 
-nav ul li a {
+nav ul li a,
+.container a {
     color: white;
     text-decoration: none;
     font-size: 24px;
@@ -71,7 +71,8 @@ nav p {
     font-size: 40px;
 }
 
-nav ul li a:hover {
+nav ul li a:hover,
+.container a:hover {
     color: var(--golden);
 }
 
