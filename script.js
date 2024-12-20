@@ -32,14 +32,15 @@ function fetchSheetData() {
                     const bookNr = columns[1].innerText.trim(); // BookNr
                     const author = columns[2].innerText.trim(); // Author
                     const price = columns[3].innerText.trim(); // Price
-                    const imgUrl = columns[4].innerText.trim(); // Image URL (assuming it's a URL text)
-                    const desc = columns[5].innerText.trim(); // Description
-                    const igLink = columns[6].innerText.trim(); // Instagram Link
+                    const antall = columns[4].innerText.trim(); // Price
+                    const imgUrl = columns[5].innerText.trim(); // Image URL
+                    const desc = columns[6].innerText.trim(); // Description
+                    const igLink = columns[7].innerText.trim(); // Instagram Link
 
                     // Ensure ImgURL is in the correct format (i.e., the direct image URL)
                     const imageUrl = convertToDirectImageUrl(imgUrl); // Convert if necessary
 
-                    books.push({ title, bookNr, author, price, imageUrl, desc, igLink });
+                    books.push({ title, bookNr, author, price, antall, imageUrl, desc, igLink });
                 }
             });
 
@@ -66,8 +67,6 @@ function convertToDirectImageUrl(imgUrl) {
     return imgUrl;
 }
 
-
-// Display books in the container
 function displayBooks(books) {
     const bookContainer = document.getElementsByClassName("book_container")[0];
     bookContainer.innerHTML = '';  // Clear any existing content in the container
@@ -77,11 +76,9 @@ function displayBooks(books) {
         let bookDiv = document.createElement("div");  // Create a new div for each book
         bookDiv.classList.add("book");  // Add a class to the div for styling
 
-        // Image for the book
-        let bookImage = document.createElement("img");
-        bookImage.classList.add("book-image");
-        bookImage.src = book.imageUrl;  // Set the image URL
-        bookImage.alt = book.title + " cover";  // Alt text for the image
+        // Create a div for the book details (including title, book number, author, and price)
+        let bookDetails = document.createElement("div");
+        bookDetails.classList.add("book-details");
 
         // Title for the book
         let bookTitle = document.createElement("div");
@@ -91,36 +88,51 @@ function displayBooks(books) {
         // Book Number for the book
         let bookNr = document.createElement("div");
         bookNr.classList.add("book-nr");
-        bookNr.textContent = `Book No: ${book.bookNr}`;
+        bookNr.textContent = `Bok Nr: ${book.bookNr}`;
 
-        // Author for the book
+        // Author for the book with "by" prefix
         let bookAuthor = document.createElement("div");
         bookAuthor.classList.add("book-author");
-        bookAuthor.textContent = `Author: ${book.author}`;
+        bookAuthor.textContent = `av: ${book.author}`;
 
         // Price for the book
         let bookPrice = document.createElement("div");
         bookPrice.classList.add("book-price");
-        bookPrice.textContent = `Price: ${book.price}`;
+        bookPrice.textContent = `Pris: ${book.price} kr`;
 
-        // Short description for the book
+        // Antall for the book
+        let bookAntall = document.createElement("div");
+        bookAntall.classList.add("book-antall");
+        bookAntall.textContent = `Antall: ${book.antall}`;
+
+        // Append the title, book number, author, and price to the bookDetails div
+        bookDetails.appendChild(bookTitle);
+        bookDetails.appendChild(bookNr);
+        bookDetails.appendChild(bookAuthor);
+        bookDetails.appendChild(bookPrice);
+        bookDetails.appendChild(bookAntall);
+
+        // Image for the book (separate from book details)
+        let bookImage = document.createElement("img");
+        bookImage.classList.add("book-image");
+        bookImage.src = book.imageUrl;  // Set the image URL
+        bookImage.alt = book.title + " cover";  // Alt text for the image
+
+        // Short description for the book (separate from book details)
         let bookDesc = document.createElement("div");
         bookDesc.classList.add("book-desc");
         bookDesc.textContent = book.desc;
 
-        // Instagram link for the book
+        // Instagram link for the book (separate from book details)
         let igLink = document.createElement("a");
-        igLink.classList.add("book-ig-link");
+        igLink.classList.add("ig-link");
         igLink.href = book.igLink;
-        igLink.textContent = "Instagram Link";
+        igLink.textContent = "Mer info";
         igLink.target = "_blank";
 
-        // Append all book details to the bookDiv
+        // Append the image and description separately (outside of bookDetails)
         bookDiv.appendChild(bookImage);
-        bookDiv.appendChild(bookTitle);
-        bookDiv.appendChild(bookNr);
-        bookDiv.appendChild(bookAuthor);
-        bookDiv.appendChild(bookPrice);
+        bookDiv.appendChild(bookDetails);  // Append the book details to the div
         bookDiv.appendChild(bookDesc);
         bookDiv.appendChild(igLink);
 

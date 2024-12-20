@@ -86,6 +86,10 @@ nav ul li a:hover,
     padding: 30px;
 }
 
+#mainDiv {
+    text-align: center;
+}
+
 .book_container {
     text-align: center;
     padding: 20px;
@@ -102,7 +106,7 @@ nav ul li a:hover,
     flex-direction: column;
     position: relative;
     width: 300px;
-    height: 480px;
+    height: 440px;
     border: 1px solid white;
     border-radius: 10px;
     overflow: hidden;
@@ -110,10 +114,11 @@ nav ul li a:hover,
 
 .book-image {
     width: 100%;
-    height: auto;
+    height: 50%;
     max-width: 100%;
     display: block;
     object-fit: cover;
+    object-position: top;
 }
 
 .book-details {
@@ -151,5 +156,5 @@ nav ul li a:hover,
 .ig-link {
     background-color: var(--darkBlue);
     color: white;
-    padding: 5px;
+    padding: 15px;
 }
