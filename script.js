@@ -27,12 +27,12 @@ function fetchSheetData() {
 
                 const columns = row.querySelectorAll('td');
 
-                if (columns.length >= 7) { // Ensure there are enough columns (Title, BookNr, Author, Price, ImgURL, Desc, IGLink)
+                if (columns.length >= 8) { // Ensure there are enough columns (Title, BookNr, Author, Price,Antall, ImgURL, Desc, IGLink)
                     const title = columns[0].innerText.trim(); // Title
                     const bookNr = columns[1].innerText.trim(); // BookNr
                     const author = columns[2].innerText.trim(); // Author
                     const price = columns[3].innerText.trim(); // Price
-                    const antall = columns[4].innerText.trim(); // Price
+                    const antall = columns[4].innerText.trim(); // Antall
                     const imgUrl = columns[5].innerText.trim(); // Image URL
                     const desc = columns[6].innerText.trim(); // Description
                     const igLink = columns[7].innerText.trim(); // Instagram Link
