@@ -103,7 +103,7 @@ function displayBooks(books) {
         // Antall for the book
         let bookAntall = document.createElement("div");
         bookAntall.classList.add("book-antall");
-        bookAntall.textContent = `Antall: ${book.bookAntall}`;
+        bookAntall.textContent = `Antall: ${book.antall}`;
 
         // Append the title, book number, author, and price to the bookDetails div
         bookDetails.appendChild(bookTitle);
