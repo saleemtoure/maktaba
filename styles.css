@@ -1,18 +1,50 @@
-/* Body styling */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #2C3E50;
-    /* Navy blue/greenish color */
-    margin: 0;
-    padding: 0;
-    color: white;
+/* EGEN CSS */
+
+:root {
+    --lightBlue: #063551;
+    --darkBlue: #052842;
+    --white: #ffffff;
+    --golden: #826810
 }
 
-/* Navbar styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--darkBlue);
+    padding: 0;
+    color: white;
+    position: relative;
+}
+
+.bg {
+    background-image: url("/images/backdrop.png");
+    height: 100%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+}
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+}
+
+
+
 nav {
-    background-color: #34495E;
-    /* Slightly darker shade for the navbar */
-    padding: 10px 0;
+    background-color: var(--lightBlue);
+    padding: 0px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+}
+
+nav p {
+    margin: 20px;
 }
 
 nav ul {
@@ -30,91 +62,93 @@ nav ul li {
 nav ul li a {
     color: white;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 24px;
+    padding: 10px 20px;
+    background-color: var(--darkBlue);
+}
+
+nav p {
+    font-size: 40px;
 }
 
 nav ul li a:hover {
-    color: #1ABC9C;
-    /* Greenish hover effect */
+    color: var(--golden);
 }
 
-/* Main container for content */
+#navBarImage {
+    width: 100px;
+    height: auto;
+}
+
 .container {
     text-align: center;
-    padding: 50px;
+    padding: 30px;
 }
 
-/* Button styling */
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #1ABC9C;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #16A085;
-    /* Darker greenish color on hover */
-}
-
-/* The book container itself */
 .book_container {
     text-align: center;
     padding: 20px;
     margin: 0 auto;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    border: 2px solid #34495E;
-    /* Optional border for the container */
-    border-radius: 10px;
-    /* Optional rounded corners */
-    background-color: transparent;
-    /* No background color for the container */
+    border-radius: 25px;
     flex-wrap: wrap;
-    /* Allow books to wrap inside the container */
 }
 
-/* Individual books with white background */
 .book {
     display: flex;
     flex-direction: column;
-    /* Stack the content vertically */
     position: relative;
-    width: 200px;
-    /* Fixed width for the books */
-    border: 2px solid #34495E;
+    width: 300px;
+    height: 480px;
+    border: 1px solid white;
     border-radius: 10px;
     overflow: hidden;
-    /* Ensures content doesn't overflow */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Image styling */
 .book-image {
     width: 100%;
     height: auto;
-    /* Ensure height adjusts to maintain the aspect ratio */
     max-width: 100%;
-    /* Prevents overflow */
     display: block;
-    /* Ensure the image is treated as a block element */
     object-fit: cover;
-    /* Makes sure the image covers the space without distortion */
 }
 
-
-/* Title styling (under the image) */
-.book-title {
-    background-color: white;
-    /* White background for the title */
-    color: #34495E;
-    /* Blueish text color */
+.book-details {
+    background-color: var(--darkBlue);
+    color: white;
     padding: 10px;
     text-align: center;
     font-size: 16px;
+}
+
+/* Generated with chatGPT */
+.book-desc {
+    background-color: white;
+    color: var(--darkBlue);
+    width: 100%;
+    /* Ensure it takes full width of the container */
+    height: 60px;
+    /* Fixed height for 3 lines */
+    overflow: hidden;
+    /* Hide overflow content */
+    display: -webkit-box;
+    /* Use flexbox to handle overflow */
+    -webkit-line-clamp: 3;
+    /* Limit text to 3 lines */
+    -webkit-box-orient: vertical;
+    /* Ensure content is stacked vertically */
+    text-overflow: ellipsis;
+    /* Show ellipsis when content overflows */
+}
+
+/* Generated with chatGPT end */
+
+
+
+.ig-link {
+    background-color: var(--darkBlue);
+    color: white;
+    padding: 5px;
 }
