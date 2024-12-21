@@ -58,8 +58,7 @@ nav ul li {
     margin: 0 15px;
 }
 
-nav ul li a,
-.container a {
+nav ul li a {
     color: white;
     text-decoration: none;
     font-size: 24px;
@@ -151,6 +150,22 @@ nav ul li a:hover,
 
 /* Generated with chatGPT end */
 
+/* Style the search box inside the navigation bar */
+#searchBar {
+    padding: 6px;
+    border: none;
+    font-size: 17px;
+}
+
+.sosial-media {
+    background-color: var(--darkBlue);
+    color: white;
+    padding: 10px;
+}
+
+.sosial-media:hover {
+    color: var(--golden);
+}
 
 
 .ig-link {
