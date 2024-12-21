@@ -155,6 +155,7 @@ function setupSearchBar() {
     const header = document.querySelector("h2"); // Assuming there's only one h2 on your page
 
     searchBar.addEventListener("input", function () {
+        //TODO huske å desinifisere søkeverdiene
         const query = searchBar.value.toLowerCase();
         // If there's an active search, hide the h2
         if (query) {
