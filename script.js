@@ -15,9 +15,9 @@ const spreadsheetId = "1t4fglWfkJVbSddoe976eucCISS4s8W_4h4zj-R-mk0s";
 const sheetId = 0; //Første tab = 0 andre er 1 osv
 const sheetName = "nylige"; //Første tab = 0 andre er 1 osv
 const restrictedApiKey = "AIzaSyBDQw9Woru2ooYmmsjnRh564xlVYyeYQww";
-// const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetName}?key=${restrictedApiKey}`; Slutta å funke for some reason skal væreriktikg backticks
+// const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetName}?key=${restrictedApiKey}`; Slutta å funke for some reason veldig random
 const url = `https://sheets.googleapis.com/v4/spreadsheets/1t4fglWfkJVbSddoe976eucCISS4s8W_4h4zj-R-mk0s/values/nylige?key=AIzaSyBDQw9Woru2ooYmmsjnRh564xlVYyeYQww`;
-// Fun fact du kan ikke bruke "" med template literals, men må bruke backtick . Hadde vært fint å huske for 12 timer siden
+//* Fun fact du kan ikke bruke "" med template literals, men må bruke backtick . Hadde vært fint å huske for 12 timer siden
 
 class Bok {
     constructor(tittel, nr, forfatter, pris, antall, bildeUrl, beskrivelse, igLink) {
@@ -149,7 +149,7 @@ function searchBarSetup() {
 
     const searchBar = document.getElementById("searchBar");
     const antallTreff = document.getElementById("antallTreff")
-    antallTreff.innerHTML = "Våre nyligste bøker";
+    antallTreff.innerHTML = "Våre nyligste bøker:";
 
     searchBar.addEventListener("input", function () {
         const search = searchBar.value.toLowerCase();
