@@ -183,9 +183,7 @@ function searchBarSetup() {
     });
 }
 
-
-//TODO: Add a contact form for website suggestions
 //TODO: Fix BG issues
 //TODO: Mobile responsiveness
 //* Ide: Fjern de med antall 0 fra søkresultat for å unngå for mange resultater?
-//!Restrict apien
+//!Restrict apien - den er åpen for testing nå
