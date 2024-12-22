@@ -1,175 +1,141 @@
-//Mesteparten av koden her er henten fra StackOverflow og redigert med AI
-
 document.addEventListener("DOMContentLoaded", function () {
-    fetchSheetData();
-
-    setupSearchBar();
-
+    fetchGoogleSheetData();
 });
 
+// TODO FIX String Literal randomly breaking
+const spreadsheetId = "1t4fglWfkJVbSddoe976eucCISS4s8W_4h4zj-R-mk0s";
+const sheetId = 0; //Første tab = 0 andre er 1 osv
+const sheetName = "nylige"; //Første tab = 0 andre er 1 osv
+const restrictedApiKey = "AIzaSyBDQw9Woru2ooYmmsjnRh564xlVYyeYQww";
+// const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetName}?key=${restrictedApiKey}`; Slutta å funke for some reason skal væreriktikg backticks
+const url = `https://sheets.googleapis.com/v4/spreadsheets/1t4fglWfkJVbSddoe976eucCISS4s8W_4h4zj-R-mk0s/values/nylige?key=AIzaSyBDQw9Woru2ooYmmsjnRh564xlVYyeYQww`;
+// Fun fact du kan ikke bruke "" med template literals, men må bruke backtick . Hadde vært fint å huske for 12 timer siden
 
-
-// Web scraping function to fetch the Google Sheet data
-function fetchSheetData() {
-    const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSjFnZEDGPhbTF3F9lw_tduqU0wz0YOAi7l_P-WdJz2MUTcCkrapzuUzx0sEPT_e0XIw0bPdT9dLPpN/pubhtml';
-
-    fetch(sheetUrl)
-        .then(response => response.text())
-        .then(html => {
-            // Parse the HTML content
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-
-            // Select all rows of data, skipping the first row (the header row)
-            const rows = doc.querySelectorAll('table tbody tr');
-
-            const books = [];
-
-            // Loop through each row and extract the relevant columns
-            rows.forEach((row, index) => {
-                if (index === 0) return; // Skip the first row (header row)
-
-                const columns = row.querySelectorAll('td');
-
-                if (columns.length >= 8) { // Ensure there are enough columns (Title, BookNr, Author, Price,Antall, ImgURL, Desc, IGLink)
-                    const title = columns[0].innerText.trim(); // Title
-                    const bookNr = columns[1].innerText.trim(); // BookNr
-                    const author = columns[2].innerText.trim(); // Author
-                    const price = columns[3].innerText.trim(); // Price
-                    const antall = columns[4].innerText.trim(); // Antall
-                    const imgUrl = columns[5].innerText.trim(); // Image URL
-                    const desc = columns[6].innerText.trim(); // Description
-                    const igLink = columns[7].innerText.trim(); // Instagram Link
-
-                    // Ensure ImgURL is in the correct format (i.e., the direct image URL)
-                    const imageUrl = convertToDirectImageUrl(imgUrl); // Convert if necessary
-
-                    books.push({ title, bookNr, author, price, antall, imageUrl, desc, igLink });
-                }
-            });
-
-            // After fetching all the books, display them
-            displayBooks(books);
-
-            window.booksData = books;  // Store the books data globally for search
-
-        })
-        .catch(error => {
-            console.error('Error fetching sheet data:', error);
-        });
+class Bok {
+    constructor(tittel, nr, forfatter, pris, antall, bildeUrl, beskrivelse, igLink) {
+        this.tittel = tittel;
+        this.nr = nr;
+        this.forfatter = forfatter;
+        this.pris = pris;
+        this.antall = antall;
+        this.bildeUrl = bildeUrl;
+        this.beskrivelse = beskrivelse;
+        this.igLink = igLink;
+    }
 }
 
-// Function to convert Google Drive file URL to a direct image URL
-function convertToDirectImageUrl(imgUrl) {
-    // If the URL is a Google Drive URL
+const books = [];
+
+async function fetchGoogleSheetData() {
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const rows = data.values;
+        // console.log(rows);
+
+        for (let i = 1; i < rows.length; i++) {
+            let tittel = rows[i][0];
+            let nr = rows[i][1];
+            let forfatter = rows[i][2];
+            let pris = rows[i][3];
+            let antall = rows[i][4];
+            let bildeUrl = rows[i][5];
+            bildeUrl = convertToEmbed(bildeUrl);
+            let beskrivelse = rows[i][6];
+            let igLink = rows[i][7];
+
+            books.push(new Bok(tittel, nr, forfatter, pris, antall, bildeUrl, beskrivelse, igLink));
+        }
+
+        displayBooks(books);
+
+        // window.booksData = books;  // Store the books data globally for search
+
+    } catch (error) {
+        console.error('Problem med å hente data fra google sheets', error); //Kan gjøre det her til send meg en mail ellerno + teknisk sett feil feilmelding
+    }
+}
+
+//Inspired by: https://joe-walton.com/blog/embedding-google-drive-images-in-html-in-2024/ and used with ChatGPT to generate this regex and function
+function convertToEmbed(bildeurl) {
     const driveRegex = /https:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)\/view\?usp=[a-zA-Z0-9_=&-]+/;
-    const match = imgUrl.match(driveRegex);
+    const match = bildeurl.match(driveRegex);
 
     if (match && match[1]) {
-        // Convert to the direct image URL format
         return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w800`;
     }
 
-    // Return the URL as-is if it's not a Google Drive link
-    return imgUrl;
+    //Hvis bildet ikke kan returneres så returneres en placeholder med info
+    return "https://raw.githubusercontent.com/saleemtoure/maktaba/7d9a7616b0f3d8f32176fbd658c0a49ec1733457/images/cant-load-picture.png";
 }
 
+const bookContainer = document.getElementById('book-container') //Fun fact getElement... er O(1) mens queryselector er O(n)
 function displayBooks(books) {
-    const bookContainer = document.getElementsByClassName("book_container")[0];
-    bookContainer.innerHTML = '';  // Clear any existing content in the container
-
-    // Iterate over each book
-    books.forEach(book => {
-        let bookDiv = document.createElement("div");  // Create a new div for each book
-        bookDiv.classList.add("book");  // Add a class to the div for styling
-
-        // Create a div for the book details (including title, book number, author, and price)
-        let bookDetails = document.createElement("div");
-        bookDetails.classList.add("book-details");
-
-        // Title for the book
-        let bookTitle = document.createElement("div");
-        bookTitle.classList.add("book-title");
-        bookTitle.textContent = book.title;
-
-        // Book Number for the book
-        let bookNr = document.createElement("div");
-        bookNr.classList.add("book-nr");
-        bookNr.textContent = `Bok Nr: ${book.bookNr}`;
-
-        // Author for the book with "by" prefix
-        let bookAuthor = document.createElement("div");
-        bookAuthor.classList.add("book-author");
-        bookAuthor.textContent = `av: ${book.author}`;
-
-        // Price for the book
-        let bookPrice = document.createElement("div");
-        bookPrice.classList.add("book-price");
-        bookPrice.textContent = `Pris: ${book.price} kr`;
-
-        // Antall for the book
-        let bookAntall = document.createElement("div");
-        bookAntall.classList.add("book-antall");
-        bookAntall.textContent = `Antall: ${book.antall}`;
-
-        // Append the title, book number, author, and price to the bookDetails div
-        bookDetails.appendChild(bookTitle);
-        bookDetails.appendChild(bookNr);
-        bookDetails.appendChild(bookAuthor);
-        bookDetails.appendChild(bookPrice);
-        bookDetails.appendChild(bookAntall);
-
-        // Image for the book (separate from book details)
-        let bookImage = document.createElement("img");
-        bookImage.classList.add("book-image");
-        bookImage.src = book.imageUrl;  // Set the image URL
-        bookImage.alt = book.title + " cover";  // Alt text for the image
-
-        // Short description for the book (separate from book details)
-        let bookDesc = document.createElement("div");
-        bookDesc.classList.add("book-desc");
-        bookDesc.textContent = book.desc;
-
-        // Instagram link for the book (separate from book details)
-        let igLink = document.createElement("a");
-        igLink.classList.add("ig-link");
-        igLink.href = book.igLink;
-        igLink.textContent = "Mer info";
-        igLink.target = "_blank";
-
-        // Append the image and description separately (outside of bookDetails)
-        bookDiv.appendChild(bookImage);
-        bookDiv.appendChild(bookDetails);  // Append the book details to the div
-        bookDiv.appendChild(bookDesc);
-        bookDiv.appendChild(igLink);
-
-        // Append the bookDiv to the container
-        bookContainer.appendChild(bookDiv);
-    });
+    bookContainer.innerHTML = '';
+    books.forEach(makeBookDisplay);
 }
 
+function makeBookDisplay(book) {
+    // console.log(book); Make sure the fields work - remember to change all mentions of a field when changing field/variable nam
 
+    let bookDiv = document.createElement("div");
+    bookDiv.classList.add("bookDiv");
 
-function setupSearchBar() {
-    const searchBar = document.getElementById("searchBar");
-    const header = document.querySelector("h2"); // Assuming there's only one h2 on your page
+    let bookDetaljer = document.createElement("div");
+    bookDetaljer.classList.add("book-details");
 
-    searchBar.addEventListener("input", function () {
-        //TODO huske å desinifisere søkeverdiene
-        const query = searchBar.value.toLowerCase();
-        // If there's an active search, hide the h2
-        if (query) {
-            header.style.display = "none";  // Hide the <h2> when searching
-        } else {
-            header.style.display = "block"; // Show the <h2> again when the search is cleared
-        }
-        const filteredBooks = window.booksData.filter(book => {
-            return book.title.toLowerCase().includes(query) ||
-                book.author.toLowerCase().includes(query) ||
-                book.desc.toLowerCase().includes(query);
-        });
+    let bookTittel = document.createElement("div");
+    bookTittel.classList.add("book-title");
+    bookTittel.textContent = book.tittel;
 
-        // Display only the four most similar books
-        displayBooks(filteredBooks.slice(0, 4));
-    });
+    let bookNr = document.createElement("div");
+    bookNr.classList.add("book-nr");
+    bookNr.textContent = `Bok Nr: ${book.nr}`;
+
+    let bookForfatter = document.createElement("div");
+    bookForfatter.classList.add("book-author");
+    bookForfatter.textContent = `av: ${book.forfatter}`;
+
+    let bookPris = document.createElement("div");
+    bookPris.classList.add("book-price");
+    bookPris.textContent = `Pris: ${book.pris} kr`;
+
+    let bookAntall = document.createElement("div");
+    bookAntall.classList.add("book-antall");
+    bookAntall.textContent = `Antall: ${book.antall}`;
+
+    bookDetaljer.appendChild(bookTittel);
+    // bookDetaljer.appendChild(bookNr);
+    bookDetaljer.appendChild(bookForfatter);
+    bookDetaljer.appendChild(bookPris);
+    bookDetaljer.appendChild(bookAntall);
+
+    let bookBilde = document.createElement("img");
+    bookBilde.classList.add("book-image");
+    bookBilde.src = book.bildeUrl;
+    bookBilde.alt = book.bokTittel + " cover";
+
+    let bookBeskrivelse = document.createElement("div");
+    bookBeskrivelse.classList.add("book-desc");
+    bookBeskrivelse.textContent = book.beskrivelse;
+
+    let igLink = document.createElement("a");
+    igLink.classList.add("ig-link");
+    igLink.href = book.igLink;
+    igLink.textContent = "Mer info";
+    igLink.target = "_blank";
+
+    bookDiv.appendChild(bookBilde);
+    bookDiv.appendChild(bookDetaljer);
+    bookDiv.appendChild(bookBeskrivelse);
+    bookDiv.appendChild(igLink);
+
+    bookContainer.appendChild(bookDiv);
 }
+
+// TODO: Implement searchbar
+// - remember to desinfect input
+// Possible to handle the result situasion by either: show the number of results and if its over 4 just show a link or link to the sheet to search self
+
+//TODO: Add a contact form for website suggestions
