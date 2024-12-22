@@ -6,6 +6,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     fetchGoogleSheetData();
     searchBarSetup();
+    displayBooks(books)
 });
 
 // TODO FIX String Literal randomly breaking
@@ -50,11 +51,15 @@ async function fetchGoogleSheetData() {
             bildeUrl = convertToEmbed(bildeUrl);
             let beskrivelse = rows[i][6];
             let igLink = rows[i][7];
+            if (igLink == undefined) {
+                igLink = "https://www.instagram.com/maktabanorulilm/";
+            }
 
             books.push(new Bok(tittel, nr, forfatter, pris, antall, bildeUrl, beskrivelse, igLink));
         }
 
-        displayBooks(books);
+        displayBooks(books.slice(0, 4));
+
     } catch (error) {
         console.error('Problem med å hente data fra google sheets', error); //Kan gjøre det her til send meg en mail ellerno + teknisk sett feil feilmelding
     }
@@ -74,11 +79,6 @@ function convertToEmbed(bildeurl) {
 }
 
 const bookContainer = document.getElementById('book-container') //Fun fact getElement... er O(1) mens queryselector er O(n)
-function displayBooks(books) {
-    bookContainer.innerHTML = '';
-    books.forEach(makeBookDisplay);
-}
-
 function makeBookDisplay(book) {
     // console.log(book); Make sure the fields work - remember to change all mentions of a field when changing field/variable nam
 
@@ -129,8 +129,6 @@ function makeBookDisplay(book) {
     igLink.textContent = "Mer info";
     igLink.target = "_blank";
 
-    // TODO if ajekk her og peke til defauldt
-
     bookDiv.appendChild(bookBilde);
     bookDiv.appendChild(bookDetaljer);
     bookDiv.appendChild(bookBeskrivelse);
@@ -139,16 +137,26 @@ function makeBookDisplay(book) {
     bookContainer.appendChild(bookDiv);
 }
 
-window.allBooks = books;
+function displayBooks(books) {
+    bookContainer.innerHTML = '';
+    books.forEach(makeBookDisplay);
+}
 
+
+window.allBooks = books;
 function searchBarSetup() {
     const searchBar = document.getElementById("searchBar");
     const antallTreff = document.getElementById("antallTreff")
-    antallTreff.innerHTML = "Ingen søk utført";
-    antallTreff.style.opacity = 0; //Funker som naturlig og concistent padding
+    antallTreff.innerHTML = "Våre nylige bøker";
+
     searchBar.addEventListener("input", function () {
         const search = searchBar.value.toLowerCase();
 
+        if (search == "") {
+            antallTreff.innerHTML = "Våre nylige bøker:";
+            displayBooks(window.allBooks.slice(0, 4));
+            return;
+        }
 
         const resultater = window.allBooks.filter(function (book) {
             return book.tittel.toLowerCase().includes(search) ||
@@ -157,22 +165,24 @@ function searchBarSetup() {
         });
 
         //Inspired by a snippet from:https://webdesign.tutsplus.com/how-to-build-a-search-bar-with-javascript--cms-107227t
-        antallTreff.style.opacity = 1;
-        if (search == "") {
-            antallTreff.style.opacity = 0;
-        }
-        if (resultater.length == 0) {
-            antallTreff.innerHTML = "Ingen resultater. Sjekk våre sosiale medier!"
-        } else if (resultater.length == 1) {
-            antallTreff.innerHTML = "Ett resultat funnet"
+        if (resultater.length > 0) {
+            antallTreff.style.opacity = 1;
+            if (resultater.length == 1) {
+                antallTreff.innerHTML = "Ett resultat funnet"
+            }
+            else {
+                antallTreff.innerHTML = `${resultater.length} resultater funnet`
+            }
         } else {
-            antallTreff.innerHTML = `${resultater.length} resultater funnet`
+            antallTreff.innerHTML = "Ingen resultater. Sjekk våre sosiale medier!"
         }
+
+        displayBooks(resultater)
     });
 }
 
 
 //TODO: Add a contact form for website suggestions
 //TODO: Fix BG issues
-//TODO: Fjern de med antall 0 fra søkrsultat
-//TODO: Se på react
+//* Ide: Fjern de med antall 0 fra søkresultat for å unngå for mange resultater?
+//!Restrict apien
