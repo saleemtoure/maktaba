@@ -174,4 +174,5 @@ function searchBarSetup() {
 
 //TODO: Add a contact form for website suggestions
 //TODO: Fix BG issues
+//TODO: Fjern de med antall 0 fra søkrsultat
 //TODO: Se på react
