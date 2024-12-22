@@ -14,65 +14,45 @@ body {
     position: relative;
 }
 
-.bg {
-    background-image: url("https://raw.githubusercontent.com/saleemtoure/maktaba/refs/heads/main/images/backdrop.png");
-    height: 100%;
-
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    z-index: -1;
-}
-
 body,
 html {
     height: 100%;
     margin: 0;
 }
 
+.bg {
+
+    background-image: url("https://raw.githubusercontent.com/saleemtoure/maktaba/refs/heads/main/images/backdrop.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+
+
 
 
 nav {
     background-color: var(--lightBlue);
-    padding: 0px 10px;
+    padding: 10px 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     position: sticky;
     top: 0;
+    z-index: 1;
 }
 
 nav p {
-    margin: 20px;
-}
-
-nav ul {
-    list-style: none;
+    font-size: 30px;
     margin: 0;
-    padding: 0;
     text-align: center;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 24px;
-    padding: 10px 20px;
-    background-color: var(--darkBlue);
-}
-
-nav p {
-    font-size: 40px;
-}
-
-nav ul li a:hover,
-.container a:hover {
-    color: var(--golden);
 }
 
 #navBarImage {
@@ -89,7 +69,7 @@ nav ul li a:hover,
     text-align: center;
 }
 
-.book_container {
+#book-container {
     text-align: center;
     padding: 20px;
     margin: 0 auto;
@@ -100,12 +80,12 @@ nav ul li a:hover,
     flex-wrap: wrap;
 }
 
-.book {
+.bookDiv {
     display: flex;
     flex-direction: column;
     position: relative;
     width: 300px;
-    height: 440px;
+    height: 100%;
     border: 1px solid white;
     border-radius: 10px;
     overflow: hidden;
@@ -113,7 +93,7 @@ nav ul li a:hover,
 
 .book-image {
     width: 100%;
-    height: 50%;
+    height: 100%;
     max-width: 100%;
     display: block;
     object-fit: cover;
