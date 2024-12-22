@@ -25,7 +25,7 @@ html {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -97,7 +97,8 @@ nav p {
     border: 1px solid white;
     border-radius: 10px;
     overflow: hidden;
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
+    margin-top: 10px;
     height: fit-content;
 }
 
@@ -172,7 +173,7 @@ nav p {
 .sosial-media {
     background-color: var(--darkBlue);
     color: white;
-    padding: 10px;
+    padding: 5px;
 }
 
 .sosial-media:hover {

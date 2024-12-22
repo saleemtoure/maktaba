@@ -149,13 +149,13 @@ function searchBarSetup() {
 
     const searchBar = document.getElementById("searchBar");
     const antallTreff = document.getElementById("antallTreff")
-    antallTreff.innerHTML = "Våre nylige bøker";
+    antallTreff.innerHTML = "Våre nyligste bøker";
 
     searchBar.addEventListener("input", function () {
         const search = searchBar.value.toLowerCase();
 
         if (search == "") {
-            antallTreff.innerHTML = "Våre nylige bøker:";
+            antallTreff.innerHTML = "Våre nyligste bøker:";
             displayBooks(window.allBooks.slice(0, 4));
             return;
         }
@@ -183,7 +183,6 @@ function searchBarSetup() {
     });
 }
 
-//TODO: Fix BG issues
 //TODO: Mobile responsiveness
 //* Ide: Fjern de med antall 0 fra søkresultat for å unngå for mange resultater?
 //!Restrict apien - den er åpen for testing nå
