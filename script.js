@@ -136,13 +136,12 @@ function makeBookDisplay(book) {
 
 // TODO: Implement searchbar
 // - remember to desinfect input
-window.allBooks = books; //Kaller den all books, men er egentlig recent books, men fikses senere inshAllah
-
+window.allBooks = books;
 function searchBar() {
 
 }
 
 
 // Possible to handle the result situasion by either: show the number of results and if its over 4 just show a link or link to the sheet to search self
-
+//- Det jeg tenker er å ha alle bokene i en sheet i stedet for too sheets som jeg tenkte før. deretter slice de fire nyligte/kun loade de før søk funksjonen blir tatt i bruk-og bare få siden til å extende egt. kanskje ha en fade til svart ellerno
 //TODO: Add a contact form for website suggestions
