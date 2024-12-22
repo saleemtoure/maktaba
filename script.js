@@ -1,7 +1,8 @@
 //Sikkerhetsmessig:
-// API nøkkelen er restricted
+// API nøkkelen er restricted til å kun kunne brukes fra valge nettaddresser
 // SQL injection skal ikke være mulig
 // XSS skal heller ikke være mulig fordi jeg tar ikke inn data fra bruker og har kontroll over dataen. Kunne bl.a. brukt textcontent i stedet for innerhtml hvis dette var en risiko
+//Derfor jeg kan bruke innerHTML
 
 document.addEventListener("DOMContentLoaded", function () {
     fetchGoogleSheetData();
@@ -145,6 +146,7 @@ function displayBooks(books) {
 
 window.allBooks = books;
 function searchBarSetup() {
+
     const searchBar = document.getElementById("searchBar");
     const antallTreff = document.getElementById("antallTreff")
     antallTreff.innerHTML = "Våre nylige bøker";
@@ -184,5 +186,6 @@ function searchBarSetup() {
 
 //TODO: Add a contact form for website suggestions
 //TODO: Fix BG issues
+//TODO: Mobile responsiveness
 //* Ide: Fjern de med antall 0 fra søkresultat for å unngå for mange resultater?
 //!Restrict apien
