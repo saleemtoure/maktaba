@@ -136,6 +136,13 @@ function makeBookDisplay(book) {
 
 // TODO: Implement searchbar
 // - remember to desinfect input
+window.allBooks = books; //Kaller den all books, men er egentlig recent books, men fikses senere inshAllah
+
+function searchBar() {
+
+}
+
+
 // Possible to handle the result situasion by either: show the number of results and if its over 4 just show a link or link to the sheet to search self
 
 //TODO: Add a contact form for website suggestions
