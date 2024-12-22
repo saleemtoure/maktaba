@@ -3,11 +3,11 @@
 :root {
     --lightBlue: #063551;
     --darkBlue: #052842;
-    --golden: #826810
+    --golden: #826810;
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: system-ui, sans-serif;
     background-color: var(--darkBlue);
     padding: 0;
     color: white;
