@@ -1,5 +1,11 @@
+//Sikkerhetsmessig:
+// API nøkkelen er restricted
+// SQL injection skal ikke være mulig
+// XSS skal heller ikke være mulig fordi jeg tar ikke inn data fra bruker og har kontroll over dataen. Kunne bl.a. brukt textcontent i stedet for innerhtml hvis dette var en risiko
+
 document.addEventListener("DOMContentLoaded", function () {
     fetchGoogleSheetData();
+    searchBarSetup();
 });
 
 // TODO FIX String Literal randomly breaking
@@ -49,9 +55,6 @@ async function fetchGoogleSheetData() {
         }
 
         displayBooks(books);
-
-        // window.booksData = books;  // Store the books data globally for search
-
     } catch (error) {
         console.error('Problem med å hente data fra google sheets', error); //Kan gjøre det her til send meg en mail ellerno + teknisk sett feil feilmelding
     }
@@ -83,10 +86,10 @@ function makeBookDisplay(book) {
     bookDiv.classList.add("bookDiv");
 
     let bookDetaljer = document.createElement("div");
-    bookDetaljer.classList.add("book-details");
+    bookDetaljer.classList.add("book-detaljer");
 
     let bookTittel = document.createElement("div");
-    bookTittel.classList.add("book-title");
+    bookTittel.classList.add("book-tittel");
     bookTittel.textContent = book.tittel;
 
     let bookNr = document.createElement("div");
@@ -94,11 +97,11 @@ function makeBookDisplay(book) {
     bookNr.textContent = `Bok Nr: ${book.nr}`;
 
     let bookForfatter = document.createElement("div");
-    bookForfatter.classList.add("book-author");
+    bookForfatter.classList.add("book-forfatter");
     bookForfatter.textContent = `av: ${book.forfatter}`;
 
     let bookPris = document.createElement("div");
-    bookPris.classList.add("book-price");
+    bookPris.classList.add("book-pris");
     bookPris.textContent = `Pris: ${book.pris} kr`;
 
     let bookAntall = document.createElement("div");
@@ -112,12 +115,12 @@ function makeBookDisplay(book) {
     bookDetaljer.appendChild(bookAntall);
 
     let bookBilde = document.createElement("img");
-    bookBilde.classList.add("book-image");
+    bookBilde.classList.add("book-bilde");
     bookBilde.src = book.bildeUrl;
     bookBilde.alt = book.bokTittel + " cover";
 
     let bookBeskrivelse = document.createElement("div");
-    bookBeskrivelse.classList.add("book-desc");
+    bookBeskrivelse.classList.add("book-beskrivelse");
     bookBeskrivelse.textContent = book.beskrivelse;
 
     let igLink = document.createElement("a");
@@ -125,6 +128,8 @@ function makeBookDisplay(book) {
     igLink.href = book.igLink;
     igLink.textContent = "Mer info";
     igLink.target = "_blank";
+
+    // TODO if ajekk her og peke til defauldt
 
     bookDiv.appendChild(bookBilde);
     bookDiv.appendChild(bookDetaljer);
@@ -134,14 +139,39 @@ function makeBookDisplay(book) {
     bookContainer.appendChild(bookDiv);
 }
 
-// TODO: Implement searchbar
-// - remember to desinfect input
 window.allBooks = books;
-function searchBar() {
 
+function searchBarSetup() {
+    const searchBar = document.getElementById("searchBar");
+    const antallTreff = document.getElementById("antallTreff")
+    antallTreff.innerHTML = "Ingen søk utført";
+    antallTreff.style.opacity = 0; //Funker som naturlig og concistent padding
+    searchBar.addEventListener("input", function () {
+        const search = searchBar.value.toLowerCase();
+
+
+        const resultater = window.allBooks.filter(function (book) {
+            return book.tittel.toLowerCase().includes(search) ||
+                book.forfatter.toLowerCase().includes(search) ||
+                book.beskrivelse.toLowerCase().includes(search);
+        });
+
+        //Inspired by a snippet from:https://webdesign.tutsplus.com/how-to-build-a-search-bar-with-javascript--cms-107227t
+        antallTreff.style.opacity = 1;
+        if (search == "") {
+            antallTreff.style.opacity = 0;
+        }
+        if (resultater.length == 0) {
+            antallTreff.innerHTML = "Ingen resultater. Sjekk våre sosiale medier!"
+        } else if (resultater.length == 1) {
+            antallTreff.innerHTML = "Ett resultat funnet"
+        } else {
+            antallTreff.innerHTML = `${resultater.length} resultater funnet`
+        }
+    });
 }
 
 
-// Possible to handle the result situasion by either: show the number of results and if its over 4 just show a link or link to the sheet to search self
-//- Det jeg tenker er å ha alle bokene i en sheet i stedet for too sheets som jeg tenkte før. deretter slice de fire nyligte/kun loade de før søk funksjonen blir tatt i bruk-og bare få siden til å extende egt. kanskje ha en fade til svart ellerno
 //TODO: Add a contact form for website suggestions
+//TODO: Fix BG issues
+//TODO: Se på react

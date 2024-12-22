@@ -21,7 +21,6 @@ html {
 }
 
 .bg {
-
     background-image: url("https://raw.githubusercontent.com/saleemtoure/maktaba/refs/heads/main/images/backdrop.png");
     background-position: center;
     background-repeat: no-repeat;
@@ -34,9 +33,30 @@ html {
     z-index: -1;
 }
 
+#mainDiv {
+    width: 100%;
+    display: grid;
+    grid:
+        "header" auto "container" 1fr "footer" auto / 1fr;
+    gap: 8px;
+    justify-content: center;
+}
 
+.header {
+    grid-area: header;
+}
 
+.container {
+    grid-area: container;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
 
+.footer {
+    grid-area: footer;
+}
 
 nav {
     background-color: var(--lightBlue);
@@ -60,19 +80,8 @@ nav p {
     height: auto;
 }
 
-.container {
-    text-align: center;
-    padding: 10px;
-}
-
-#mainDiv {
-    text-align: center;
-}
-
 #book-container {
     text-align: center;
-    padding: 20px;
-    margin: 0 auto;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -85,22 +94,21 @@ nav p {
     flex-direction: column;
     position: relative;
     width: 300px;
-    height: 100%;
     border: 1px solid white;
     border-radius: 10px;
     overflow: hidden;
+    margin-bottom: 30px;
 }
 
-.book-image {
+.book-bilde {
     width: 100%;
-    height: 100%;
     max-width: 100%;
     display: block;
     object-fit: cover;
     object-position: top;
 }
 
-.book-details {
+.book-detaljer {
     background-color: var(--darkBlue);
     color: white;
     padding: 10px;
@@ -109,32 +117,48 @@ nav p {
 }
 
 /* Generated with chatGPT */
-.book-desc {
+.book-beskrivelse {
     background-color: white;
     color: var(--darkBlue);
     width: 100%;
-    /* Ensure it takes full width of the container */
     height: 60px;
-    /* Fixed height for 3 lines */
     overflow: hidden;
-    /* Hide overflow content */
     display: -webkit-box;
-    /* Use flexbox to handle overflow */
     -webkit-line-clamp: 3;
-    /* Limit text to 3 lines */
     -webkit-box-orient: vertical;
-    /* Ensure content is stacked vertically */
     text-overflow: ellipsis;
-    /* Show ellipsis when content overflows */
 }
 
 /* Generated with chatGPT end */
 
-/* Style the search box inside the navigation bar */
+#searchContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
 #searchBar {
     padding: 6px;
     border: none;
     font-size: 17px;
+    max-width: 100%;
+    margin-top: 15px;
+}
+
+#antallTreff {
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    margin: 0;
+}
+
+#footer {
+    font-size: 16px;
+    margin-top: 10px;
+    color: white;
+    text-align: center;
 }
 
 .sosial-media {
@@ -146,7 +170,6 @@ nav p {
 .sosial-media:hover {
     color: var(--golden);
 }
-
 
 .ig-link {
     background-color: var(--darkBlue);
