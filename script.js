@@ -4,13 +4,17 @@
 // XSS skal heller ikke være mulig fordi jeg tar ikke inn data fra bruker og har kontroll over dataen. Kunne bl.a. brukt textcontent i stedet for innerhtml hvis dette var en risiko
 //Derfor jeg kan bruke innerHTML
 
+// TODO FIX String Literal randomly breaking
+//* Ide: Fjern de med antall 0 fra søkresultat for å unngå for mange resultater? Evt folde sammen de med lite antall
+//!Restrict apien - den er åpen for testing nå
+
+
 document.addEventListener("DOMContentLoaded", function () {
     fetchGoogleSheetData();
     searchBarSetup();
     displayBooks(books)
 });
 
-// TODO FIX String Literal randomly breaking
 const spreadsheetId = "1t4fglWfkJVbSddoe976eucCISS4s8W_4h4zj-R-mk0s";
 const sheetId = 0; //Første tab = 0 andre er 1 osv
 const sheetName = "nylige"; //Første tab = 0 andre er 1 osv
@@ -183,7 +187,3 @@ function searchBarSetup() {
         displayBooks(resultater)
     });
 }
-
-//TODO: Mobile responsiveness
-//* Ide: Fjern de med antall 0 fra søkresultat for å unngå for mange resultater? Evt folde sammen de med lite antall
-//!Restrict apien - den er åpen for testing nå
