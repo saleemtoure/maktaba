@@ -4,8 +4,7 @@
 // XSS skal heller ikke være mulig fordi jeg tar ikke inn data fra bruker og har kontroll over dataen. Kunne bl.a. brukt textcontent i stedet for innerhtml hvis dette var en risiko
 //Derfor jeg kan bruke innerHTML
 
-// TODO FIX String Literal randomly breaking
-//* Ide: Fjern de med antall 0 fra søkresultat for å unngå for mange resultater? Evt folde sammen de med lite antall
+//* Ide: Fjern de med antall 0 fra søkeresultat for å unngå for mange resultater? Evt folde sammen de med lite antall
 //!Restrict apien - den er åpen for testing nå
 
 
@@ -15,14 +14,14 @@ document.addEventListener("DOMContentLoaded", function () {
     displayBooks(books)
 });
 
-const spreadsheetId = "1t4fglWfkJVbSddoe976eucCISS4s8W_4h4zj-R-mk0s";
-const sheetId = 0; //Første tab = 0 andre er 1 osv
-const sheetName = "nylige"; //Første tab = 0 andre er 1 osv
-const restrictedApiKey = "AIzaSyBDQw9Woru2ooYmmsjnRh564xlVYyeYQww";
-// const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetName}?key=${restrictedApiKey}`; Slutta å funke for some reason veldig random
-const url = `https://sheets.googleapis.com/v4/spreadsheets/1t4fglWfkJVbSddoe976eucCISS4s8W_4h4zj-R-mk0s/values/nylige?key=AIzaSyBDQw9Woru2ooYmmsjnRh564xlVYyeYQww`;
+// TODO Fix template literal som plutselig sluttet å funke
+// const spreadsheetId = "1t4fglWfkJVbSddoe976eucCISS4s8W_4h4zj-R-mk0s";
+// const sheetId = 0; //Første tab = 0 andre er 1 osv
+// const sheetName = "bøker"; //Første tab = 0 andre er 1 osv
+// const restrictedApiKey = "AIzaSyBDQw9Woru2ooYmmsjnRh564xlVYyeYQww";
+// const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetName}?key=${restrictedApiKey}`; //Slutta å funke for some reason veldig random
+const url = `https://sheets.googleapis.com/v4/spreadsheets/1t4fglWfkJVbSddoe976eucCISS4s8W_4h4zj-R-mk0s/values/bøker?key=AIzaSyBDQw9Woru2ooYmmsjnRh564xlVYyeYQww`;
 //* Fun fact du kan ikke bruke "" med template literals, men må bruke backtick . Hadde vært fint å huske for 12 timer siden
-
 class Bok {
     constructor(tittel, nr, forfatter, pris, antall, bildeUrl, beskrivelse, igLink) {
         this.tittel = tittel;
@@ -147,7 +146,6 @@ function displayBooks(books) {
     bookContainer.innerHTML = '';
     books.forEach(makeBookDisplay);
 }
-
 
 window.allBooks = books;
 function searchBarSetup() {
