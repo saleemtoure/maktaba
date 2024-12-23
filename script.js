@@ -108,6 +108,7 @@ function makeBookDisplay(book) {
     let bookAntall = document.createElement("div");
     bookAntall.classList.add("book-antall");
     bookAntall.textContent = `Antall: ${book.antall}`;
+    bookAntall.style.fontWeight = "bold";
 
     bookDetaljer.appendChild(bookTittel);
     // bookDetaljer.appendChild(bookNr);
@@ -127,7 +128,7 @@ function makeBookDisplay(book) {
     let igLink = document.createElement("a");
     igLink.classList.add("ig-link");
     igLink.href = book.igLink;
-    igLink.textContent = "Mer info";
+    igLink.textContent = "Mer info"; //Kan legge til en bestill
     igLink.target = "_blank";
 
     bookDiv.appendChild(bookBilde);
@@ -184,5 +185,5 @@ function searchBarSetup() {
 }
 
 //TODO: Mobile responsiveness
-//* Ide: Fjern de med antall 0 fra søkresultat for å unngå for mange resultater?
+//* Ide: Fjern de med antall 0 fra søkresultat for å unngå for mange resultater? Evt folde sammen de med lite antall
 //!Restrict apien - den er åpen for testing nå
