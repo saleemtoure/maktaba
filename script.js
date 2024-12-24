@@ -5,7 +5,7 @@
 //Derfor jeg kan bruke innerHTML
 
 //* Ide: Fjern de med antall 0 fra søkeresultat for å unngå for mange resultater? Evt folde sammen de med lite antall
-//!Restrict apien - den er åpen for testing nå
+//!Restrict apien - den er åpen for testing nå - vet ikkje hva problemet er
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     searchBarSetup();
     displayBooks(books)
 });
+
 
 // TODO Fix template literal som plutselig sluttet å funke
 // const spreadsheetId = "1t4fglWfkJVbSddoe976eucCISS4s8W_4h4zj-R-mk0s";
@@ -71,6 +72,9 @@ async function fetchGoogleSheetData() {
 
 //Inspired by: https://joe-walton.com/blog/embedding-google-drive-images-in-html-in-2024/ and used with ChatGPT to generate this regex and function
 function convertToEmbed(bildeurl) {
+    if (!bildeurl) {
+        return "https://raw.githubusercontent.com/saleemtoure/maktaba/7d9a7616b0f3d8f32176fbd658c0a49ec1733457/images/cant-load-picture.png";
+    }
     const driveRegex = /https:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)\/view\?usp=[a-zA-Z0-9_=&-]+/;
     const match = bildeurl.match(driveRegex);
 
