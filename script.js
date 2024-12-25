@@ -139,9 +139,10 @@ function makeBookDisplay(book) {
 
     let igLink = document.createElement("a");
     igLink.classList.add("ig-link");
-    igLink.href = "https://www.instagram.com/direct/t/17842107932207694/";
-    // igLink.href = book.igLink;
-    igLink.textContent = "Mer info"; //Kan legge til en bestill
+    // igLink.href = "https://www.instagram.com/direct/t/17842107932207694/";
+    // Funker ikke på mobil idk why - Hvis jeg får det til å fungere så kan jeg legge til en bestill knapp
+    igLink.href = book.igLink;
+    igLink.textContent = "Mer info";
     igLink.target = "_blank";
 
     bookDiv.appendChild(bookBilde);
