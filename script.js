@@ -172,26 +172,34 @@ function searchBarSetup() {
             displayBooks(window.allBooks.slice(0, 4));
             return;
         }
+        antallTreff.innerHTML = "Skriv minst tre bokstaver";
+        if (search.length >= 3) {
 
-        const resultater = window.allBooks.filter(function (book) {
-            return book.tittel.toLowerCase().includes(search) ||
-                book.forfatter.toLowerCase().includes(search) ||
-                book.beskrivelse.toLowerCase().includes(search);
-        });
+            const resultater = window.allBooks.filter(function (book) {
+                //For å unngå høy belastning på enheten som prøver å laste inn 1.4k bøker:
+                //Bruker må skrive inn minst 3 bokstaver
+                //* Vurderer å implementere søk på nøkkelord i stedet for beskrivelse (Gjør begge for nå, men for se på tilbakemelding)
 
-        //Inspired by a snippet from:https://webdesign.tutsplus.com/how-to-build-a-search-bar-with-javascript--cms-107227t
-        if (resultater.length > 0) {
-            antallTreff.style.opacity = 1;
-            if (resultater.length == 1) {
-                antallTreff.innerHTML = "Ett resultat funnet"
+                return book.tittel.toLowerCase().includes(search) ||
+                    book.forfatter.toLowerCase().includes(search) ||
+                    book.beskrivelse.toLowerCase().includes(search);
+            });
+
+            //Inspired by a snippet from:https://webdesign.tutsplus.com/how-to-build-a-search-bar-with-javascript--cms-107227t
+            if (resultater.length > 0) {
+                antallTreff.style.opacity = 1;
+                if (resultater.length == 1) {
+                    antallTreff.innerHTML = "Ett resultat funnet"
+                }
+                else {
+                    antallTreff.innerHTML = `${resultater.length} resultater funnet`
+                }
+            } else {
+                antallTreff.innerHTML = "Ingen resultater. Sjekk våre sosiale medier!"
             }
-            else {
-                antallTreff.innerHTML = `${resultater.length} resultater funnet`
-            }
-        } else {
-            antallTreff.innerHTML = "Ingen resultater. Sjekk våre sosiale medier!"
+
+            displayBooks(resultater)
+
         }
-
-        displayBooks(resultater)
     });
 }
