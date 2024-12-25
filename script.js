@@ -4,6 +4,11 @@
 // XSS skal heller ikke være mulig fordi jeg tar ikke inn data fra bruker og har kontroll over dataen. Kunne bl.a. brukt textcontent i stedet for innerhtml hvis dette var en risiko
 //Derfor jeg kan bruke innerHTML
 
+//*Tools used to test security:
+// https://internetsecure.org/
+// https://scanner.blacksight.io/
+// https://www.immuniweb.com/websec/
+
 //* Ide: Fjern de med antall 0 fra søkeresultat for å unngå for mange resultater? Evt folde sammen de med lite antall
 //!Restrict apien - den er åpen for testing nå - vet ikkje hva problemet er
 
@@ -160,6 +165,7 @@ function searchBarSetup() {
 
     searchBar.addEventListener("input", function () {
         const search = searchBar.value.toLowerCase();
+        // Ikke farlig fordi den interact aldri med "databasen" eller sender aldri noe tilbake til siden
 
         if (search == "") {
             antallTreff.innerHTML = "Våre nyligste bøker:";
