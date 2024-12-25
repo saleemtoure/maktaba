@@ -139,7 +139,8 @@ function makeBookDisplay(book) {
 
     let igLink = document.createElement("a");
     igLink.classList.add("ig-link");
-    igLink.href = book.igLink;
+    igLink.href = "https://www.instagram.com/direct/t/17842107932207694/";
+    // igLink.href = book.igLink;
     igLink.textContent = "Mer info"; //Kan legge til en bestill
     igLink.target = "_blank";
 
